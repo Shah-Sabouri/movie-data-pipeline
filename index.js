@@ -16,3 +16,11 @@ const filterByYear = (minYear, movies) =>
 
 const sortByRating = (movies) =>
     [...movies].sort((a, b) => b.averageRating - a.averageRating);
+
+// HIGHER ORDER FUNCTIONS
+
+const pipe = (...fns) => 
+    (input) => fns.reduce((acc, fn) => fn(acc), input);
+
+const compose = (...fns) =>
+    (input) => fns.reduceRight((act, fn) => fn(acc), input);
