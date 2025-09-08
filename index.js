@@ -1,29 +1,40 @@
-// PURE FUNCTIONS
+// ------------------ PURE FUNCTIONS -----------------------
 
+// To calculate average rating
 const calculateAverage = (ratings) =>
     ratings.reduce((sum, r) => sum + r, 0) / ratings.length;
 
+// Add average rating for movies
 const addAverageRating = (movie) => ({
     ...movie,
     averageRating: calculateAverage(movie.ratings),
 });
 
+// Filter movies by genre
 const filterByGenre = (genre, movies) =>
     movies.filter((movie) => movie.genre === genre);
 
+// Filter movies by release year, ascending
 const filterByYear = (minYear, movies) =>
     movies.filter((movie) => movie.year >= minYear);
 
+// Sort movies by average rating, descending
 const sortByRating = (movies) =>
     [...movies].sort((a, b) => b.averageRating - a.averageRating);
 
-// HIGHER ORDER FUNCTIONS
+// ---------------------------------------------------------
 
+// --------------- HIGHER ORDER FUNCTIONS ------------------
+
+// Run functions in specific order (left to right)
 const pipe = (...fns) => 
     (input) => fns.reduce((acc, fn) => fn(acc), input);
 
+// Same thing here but in opposite
 const compose = (...fns) =>
     (input) => fns.reduceRight((act, fn) => fn(acc), input);
+
+// ---------------------------------------------------------
 
 // HARD CODED EXAMPLE DATA
 
@@ -34,7 +45,9 @@ const movies = [
     { id: 4, title: "Avatar", genre: "SciFi", year: 2009, ratings: [8, 7, 8, 9, 7] },
 ];
 
-// EXAMPLE PIPELINE FOR PROCESSING MOVIES
+// ---------------------------------------------------------
+
+// -------- EXAMPLE PIPELINE FOR PROCESSING MOVIES ---------
 
 const processMovies = pipe(
     (ms) => ms.map(addAverageRating),
@@ -42,5 +55,7 @@ const processMovies = pipe(
     (ms) => filterByYear("2000", ms),
     sortByRating
 );
+
+// ---------------------------------------------------------
 
 console.log("Results: ", processMovies(movies));
